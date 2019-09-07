@@ -6,5 +6,4 @@ This file merely computes the double body flow around a sphere, using the method
 
 Next, we will need to enforce the antisymmetric image condition to mimic the infinite frequency (0 period) solution to the 3D radiation problem.  
 
-
 Of course, this is a steady code, with forward speed.  This is a totally diffeent boundary condition than any of the radiation potentials solved for in 3D-diffraction.  Nevertheless, much of the programming is similar.  This is the point of the exercise.
