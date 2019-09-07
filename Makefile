@@ -26,7 +26,7 @@ SOURCES = $(src)precise.f90 \
 	$(src)fourthconst.f90 \
 	$(src)A.f90 \
 	$(src)slae.f90 \
-	$(src)p1.f90
+	$(src)p2.f90
 
 OBJECTS := $(addprefix $(src),$(notdir $(SOURCES:.f90=.o)))
 
