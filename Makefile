@@ -1,62 +1,56 @@
-## Simple make file, It does NOT check for interdependencies of modules.
-## It probably is best to do make clean; make if you change a module.
+##########################################################################################
 
-## Make files are extremely picky about syntax. 
-## Indentations have to be done with tabulators!
-## Absolutely nothing can follow a continuation backslash.
+# Specify library locations here (add or remove "#" marks to comment/uncomment lines for your platform)
 
-## List main program module last
-## 
-SOURCES = precise.f90 \
-	io.f90 \
-	vtkxmlmod.f90 \
-	fifthpanel.f90 \
-	fourthconst.f90 \
-	A.f90 \
-	slae.f90 \
-	p1.f90
+########################################################################################
 
-## Define name of main program
-PROGRAM = p1
+TARGET = flowsolver
+src = src/
+build = build/
+bin = bin/
+CC = gfortran
+LD = gfortran
+CFLAGS = -c -O3 -I./bin
+LFLAGS = -O3 -march=native -ffast-math -funroll-loops -I./bin
+# CFLAGS = -O3 -Wall -Werror -ansi -pedantic  -I./include -I./src
+# LFLAGS = -O3 -Wall -Werror -ansi -pedantic 
+LIBS = 
 
-# Compiler
-FF = g95
-
-# Delete program
-# Linux
-RM = rm -f
-# DOSe
-#RM = del
-
-## Compiler options
-# for the Intel Fortran 90 compiler
-# CFLAGS = -c -fast -heap-arrays
-
-# for the g95 compiler
-CFLAGS = -c -O2
-
-#Linker Options
-# for the Intel Fortran 90 compiler
-# LDFLAGS = -fast -heap-arrays
-
-# for the g95 compiler
-LDFLAGS = -O2
+########################################################################################
+## !! Do not edit below this line
 
 
-## Probably no changes necessary below this line
-OBJECTS = $(SOURCES:.f90=.o)
+# SOURCES := $(wildcard $(src)*.f90)
+SOURCES = $(src)precise.f90 \
+	$(src)io.f90 \
+	$(src)vtkxmlmod.f90 \
+	$(src)fifthpanel.f90 \
+	$(src)fourthconst.f90 \
+	$(src)A.f90 \
+	$(src)slae.f90 \
+	$(src)p1.f90
 
-all: $(SOURCES) $(PROGRAM)
+OBJECTS := $(addprefix $(src),$(notdir $(SOURCES:.f90=.o)))
+
+all: $(SOURCES) $(TARGET)
 
 
-$(PROGRAM): $(OBJECTS)
-	$(FF) $(LDFLAGS) $(OBJECTS) -o $@
+
+$(TARGET): $(OBJECTS)
+	$(CC) $(LFLAGS) $(OBJECTS) -o $(bin)$@  
+	mv *.mod build
 
 $(OBJECTS): %.o: %.f90
-	$(FF) $(CFLAGS) $< -o $@
+	$(CC) $(CFLAGS) $< -o $@
+
+
 
 clean:
-	$(RM) $(OBJECTS) *.mod 
+	rm -f $(OBJECTS)
+	rm -f $(build)*.mod
 
+	
 realclean:
-	$(RM) $(OBJECTS) *.mod $(PROGRAM)
+	rm -f $(build)$(OBJECTS)
+	rm -f $(build)*.mod
+	rm -f $(bin)$(TARGET)
