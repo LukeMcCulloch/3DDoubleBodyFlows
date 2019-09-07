@@ -12,8 +12,6 @@ CC = gfortran
 LD = gfortran
 CFLAGS = -c -O3 -I./bin
 LFLAGS = -O3 -march=native -ffast-math -funroll-loops -I./bin
-# CFLAGS = -O3 -Wall -Werror -ansi -pedantic  -I./include -I./src
-# LFLAGS = -O3 -Wall -Werror -ansi -pedantic 
 LIBS = 
 
 ########################################################################################
